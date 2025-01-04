@@ -1,5 +1,7 @@
 ## Instalasi
 
+Jalankan command berikut di terminal anda:
+
 1. git clone https://github.com/AA43000/sekolah-test.git
 2. cd proyek-anda
 3. composer install
