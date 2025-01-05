@@ -19,15 +19,12 @@ use App\Http\Controllers\KelasController;
 use App\Http\Controllers\SiswaController;
 use App\Http\Controllers\GuruController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Route::get('/login', [LoginController::class, 'index'])->name('login');
 Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::post('/login/proses', [LoginController::class, 'prosesLogin'])->name('login-proses');
 
 Route::group(['middleware' => ['auth']], function() {
+    Route::get('/', [DashboardController::class, 'index']);
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/dashboard/load-guru', [DashboardController::class, 'loadGuru'])->name('dashboard.load-guru');
     Route::get('/dashboard/load-siswa', [DashboardController::class, 'loadSiswa'])->name('dashboard.load-siswa');

@@ -84,18 +84,18 @@
             <thead>
                 <tr>
                     <th scope="col">#</th>
+                    <th scope="col">Kelas</th>
                     <th scope="col">nama Siswa</th>
                     <th scope="col">nama Guru</th>
-                    <th scope="col">Kelas</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach($data3 as $key => $dt1)
                     <tr>
                         <td>{{$key+1}}</td>
-                        <td>{{$dt1->nama_siswa}}</td>
-                        <td>{{$dt1->nama_guru}}</td>
                         <td>{{$dt1->nama_kelas}}</td>
+                        <td>{{$dt1->list_siswa}}</td>
+                        <td>{{$dt1->list_guru}}</td>
                     </tr>
                 @endforeach
             </tbody>

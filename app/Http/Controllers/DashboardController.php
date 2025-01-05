@@ -27,11 +27,12 @@ class DashboardController extends Controller
             ->leftJoin('guru_kelas', 'guru_kelas.id_guru', '=', 'gurus.id')
             ->leftJoin('kelas', 'kelas.id', '=', 'guru_kelas.id_kelas')
             ->get();
-        $data['data3'] = DB::table('siswas')
-            ->select('siswas.name as nama_siswa', 'gurus.name as nama_guru', 'kelas.name as nama_kelas')
-            ->leftJoin('guru_kelas', 'guru_kelas.id_kelas', '=', 'siswas.id_kelas')
-            ->leftJoin('kelas', 'kelas.id', '=', 'guru_kelas.id_kelas')
+        $data['data3'] = DB::table('kelas')
+            ->select('kelas.id', 'kelas.name as nama_kelas', DB::raw("GROUP_CONCAT(DISTINCT siswas.name SEPARATOR ', ') as list_siswa"), DB::raw("GROUP_CONCAT(DISTINCT gurus.name SEPARATOR ', ') as list_guru"))
+            ->leftJoin('siswas', 'siswas.id_kelas', '=', 'kelas.id')
+            ->leftJoin('guru_kelas', 'guru_kelas.id_kelas', '=', 'kelas.id')
             ->leftJoin('gurus', 'gurus.id', '=', 'guru_kelas.id_guru')
+            ->groupBy('kelas.id', 'kelas.name')
             ->get();
         return view('dashboard', $data);
     }
