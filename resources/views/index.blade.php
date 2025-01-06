@@ -76,6 +76,9 @@
                         <a class="nav-link" href="{{route('siswa')}}">Siswa</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="{{route('orangtua')}}">Orang Tua</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="{{route('kelas')}}">kelas</a>
                     </li>
                     <li class="nav-item">

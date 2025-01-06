@@ -18,6 +18,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KelasController;
 use App\Http\Controllers\SiswaController;
 use App\Http\Controllers\GuruController;
+use App\Http\Controllers\OrangtuaController;
 
 Route::get('/login', [LoginController::class, 'index'])->name('login');
 Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
@@ -46,4 +47,10 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('/guru/get-data', [guruController::class, 'getData'])->name('guru.get-data');
     Route::post('/guru/action-data', [guruController::class, 'actionData'])->name('guru.action-data');
     Route::delete('/guru/delete-data', [guruController::class, 'deleteData'])->name('guru.delete-data');
+
+    Route::get('/orangtua', [OrangtuaController::class, 'index'])->name('orangtua');
+    Route::get('/orangtua/load-data', [OrangtuaController::class, 'loadData'])->name('orangtua.load-data');
+    Route::get('/orangtua/get-data', [OrangtuaController::class, 'getData'])->name('orangtua.get-data');
+    Route::post('/orangtua/action-data', [OrangtuaController::class, 'actionData'])->name('orangtua.action-data');
+    Route::delete('/orangtua/delete-data', [OrangtuaController::class, 'deleteData'])->name('orangtua.delete-data');
 });

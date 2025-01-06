@@ -3,7 +3,7 @@
 @section('content')
     <div class="card mt-3">
         <div class="card-header d-flex justify-content-between">
-            <h3>Data Siswa</h3>
+            <h3>Data Orang Tua</h3>
             <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#modalForm">Tambah Data</button>
         </div>
         <div class="card-body">
@@ -12,11 +12,8 @@
                     <thead>
                         <tr>
                             <th scope="col">#</th>
-                            <th scope="col">nama Siswa</th>
-                            <th scope="col">Jenis Kelamin</th>
-                            <th scope="col">NIS</th>
-                            <th scope="col">kelas</th>
-                            <th scope="col">Orang Tua</th>
+                            <th scope="col">Nama Orang Tua</th>
+                            <th scope="col">Nama Siswa</th>
                             <th scope="col">Aksi</th>
                         </tr>
                     </thead>
@@ -42,25 +39,14 @@
                     </div>
                     <div class="modal-body">
                         <div class="form-group">
-                            <label for="name">Nama Siswa</label>
-                            <input type="text" id="name" name="name" class="form-control" placeholder="Nama Siswa" required>
+                            <label for="name">Nama Orang Tua</label>
+                            <input type="text" id="name" name="name" class="form-control" placeholder="Nama Orang Tua" required>
                         </div>
                         <div class="form-group">
-                            <label for="jenis_kelamin">jenis Kelamin</label>
-                            <select name="jenis_kelamin" id="jenis_kelamin" class="form-control">
-                                <option value="Laki laki">Laki Laki</option>
-                                <option value="perempuan">Perempuan</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="nis">NIS</label>
-                            <input type="text" id="nis" name="nis" class="form-control" placeholder="NIS" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="kelas">Kelas</label>
-                            <select name="id_kelas" id="id_kelas" class="form-control">
-                                <option value="" selected disabled>Pilih Kelas</option>
-                                @foreach($kelas as $row)
+                            <label for="id_kelas">Siswa</label>
+                            <select name="id_siswa" id="id_siswa" class="form-control">
+                                <option value="" selected disabled>Pilih Siswa</option>
+                                @foreach($siswas as $row)
                                 <option value="{{$row->id}}">{{$row->name}}</option>
                                 @endforeach
                             </select>
@@ -82,7 +68,7 @@
                 e.preventDefault();
 
                 $.ajax({
-                    url: "{{route('siswa.action-data')}}",
+                    url: "{{route('orangtua.action-data')}}",
                     data: $(this).serialize(),
                     dataType: "json",
                     type: "post",
@@ -112,23 +98,20 @@
 
         function load_data() {
             $.ajax({
-                url: "{{route('siswa.load-data')}}",
+                url: "{{route('orangtua.load-data')}}",
                 dataType: "json",
                 type: "get",
                 beforeSend: function() {
                     showLoader();
                 },
                 success: function(response) {
-                    var html;
+                    var html = '';
                     var no = 1;
                     for(var x = 0;x<response.length;x++) {
                         html += `<tr>
                                     <th scope="row">${no++}</th>
                                     <td>${response[x].name}</td>
-                                    <td>${response[x].jenis_kelamin}</td>
-                                    <td>${response[x].nis}</td>
-                                    <td>${response[x].nama_kelas}</td>
-                                    <td>${(response[x].nama_orangtua == null ? '' : response[x].nama_orangtua)}</td>
+                                    <td>${response[x].nama_siswa}</td>
                                     <td>
                                         <button type="button" class="btn btn-danger" onclick="delete_data(${response[x].id})"><i class="fa fa-trash" aria-hidden="true"></i></button>
                                         <button type="button" class="btn btn-success" onclick="edit_data(${response[x].id})"><i class="fa fa-pencil" aria-hidden="true"></i></button>
@@ -149,7 +132,7 @@
         function delete_data(id) {
             if(confirm('Yakin ingin menghapus data ini?')) {
                 $.ajax({
-                    url: "{{route('siswa.delete-data')}}",
+                    url: "{{route('orangtua.delete-data')}}",
                     data: {
                         id: id,
                         _token: "{{csrf_token()}}"
@@ -175,7 +158,7 @@
 
         function edit_data(id) {
             $.ajax({
-                url: "{{route('siswa.get-data')}}",
+                url: "{{route('orangtua.get-data')}}",
                 data: {id: id},
                 dataType: "json",
                 type: "get",
@@ -185,9 +168,7 @@
                 success: function(response) {
                     $("#id").val(response.id);
                     $("#name").val(response.name);
-                    $("#nis").val(response.nis);
-                    $("#jenis_kelamin").val(response.jenis_kelamin);
-                    $("#id_kelas").val(response.id_kelas);
+                    $("#id_siswa").val(response.id_siswa);
 
                     $("#modalForm").modal('show');
                 },  

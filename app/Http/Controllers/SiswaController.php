@@ -16,7 +16,11 @@ class SiswaController extends Controller
     }
 
     public function loadData(Request $req) {
-        $data = DB::table('siswas')->select('siswas.*', 'kelas.name as nama_kelas')->leftJoin('kelas', 'kelas.id', '=', 'siswas.id_kelas')->get();
+        $data = DB::table('siswas')
+        ->select('siswas.*', 'kelas.name as nama_kelas', 'orangtuas.name as nama_orangtua')
+        ->leftJoin('kelas', 'kelas.id', '=', 'siswas.id_kelas')
+        ->leftJoin('orangtuas', 'orangtuas.id_siswa', '=', 'siswas.id')
+        ->get();
 
         return response()->json($data);
     }
